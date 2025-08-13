@@ -16,7 +16,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: fb-sync
+    container_name: test
     restart: always
     environment:
       - DB_TYPE=postgres
