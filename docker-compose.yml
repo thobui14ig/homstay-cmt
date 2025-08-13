@@ -1,0 +1,48 @@
+version: '2.1'
+
+services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=111111
+      - POSTGRES_DB=fb-sync
+    volumes:
+      - postgres-volume:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+  # fb-sync:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: fb-sync
+  #   restart: always
+  #   environment:
+  #     - DB_TYPE=postgres
+  #     - DB_HOST=postgres
+  #     - DB_PORT=5432
+  #     - DB_USERNAME=root
+  #     - DB_PASSWORD=111111
+  #     - DB_DATABASE=demo
+  #     - KAFKAJS_NO_PARTITIONER_WARNING=1
+  #     - KAFKA_HOST=kafka
+  #     - KAFKA_PORT=19092
+  #     - USERSERVICE_HOST=user-service:5001
+  #   ports:
+  #     - '1000:1000'
+
+  redis:
+    image: redis:latest
+    container_name: my-redis
+    ports:
+      - '6379:6379'
+    command: ['redis-server', '--appendonly', 'yes']
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+
+volumes:
+  postgres-volume:
+    driver: local
+  redis-data:
