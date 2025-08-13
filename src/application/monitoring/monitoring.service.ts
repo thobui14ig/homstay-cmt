@@ -442,6 +442,7 @@ export class MonitoringService implements OnModuleInit {
   }
 
   async processLinkPublic2(link: LinkEntity) {
+    console.log("🚀 ~ MonitoringService ~ processLinkPublic2 ~ link:", link)
     if (link.postIdV1) {
       const runThread = async (threadOrder: number) => {
         while (true) {
