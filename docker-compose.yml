@@ -25,6 +25,9 @@ services:
       - DB_USER_NAME=root
       - DB_PASSWORD=111111
       - DB_DATABASE=fb-sync
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_TYPE=single
     ports:
       - '1000:1000'
 
