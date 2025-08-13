@@ -72,6 +72,7 @@ export class MonitoringService implements OnModuleInit {
     @InjectQueue(KEY_PROCESS_QUEUE.ADD_COMMENT) private monitoringQueue: Queue,
     private consumer: MonitoringConsumer
   ) {
+    console.log(1111111111111)
   }
 
   async onModuleInit() {
