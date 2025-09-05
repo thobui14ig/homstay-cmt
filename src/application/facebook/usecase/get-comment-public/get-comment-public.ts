@@ -47,14 +47,13 @@ export class GetCommentPublicUseCase {
             const response = await firstValueFrom(
                 this.httpService.post(this.fbGraphql, body, {
                     headers,
-                    // httpsAgent
+                    httpsAgent
                 })
             )
 
             const end = Date.now();
             const duration = (end - start) / 1000;
 
-            if (postId === '122157886814523203') console.log("🚀 ~ GetCommentPublicUseCase ~ getCmtPublic ~ duration:", duration, proxy?.proxyAddress)
             if (duration > (delay?.timeRemoveProxySlow ?? 20)) {
                 await this.proxyService.updateProxyDie(proxy, 'TIME_OUT')
                 return this.getCmtPublic(postId)
@@ -90,7 +89,8 @@ export class GetCommentPublicUseCase {
                 const data = JSON.parse(lines[0])
                 dataComment = handleDataComment({ data })
             }
-            // if (postId === '122157886814523203') console.log(dataComment)
+
+            console.log(dataComment)
             if (dataComment) {
                 const key = `${link.id}_${dataComment.commentCreatedAt.replaceAll("-", "").replaceAll(" ", "").replaceAll(":", "")}`
                 const isExistKey = await this.redisService.checkAndUpdateKey(key)

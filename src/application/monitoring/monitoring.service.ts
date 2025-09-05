@@ -442,24 +442,21 @@ export class MonitoringService implements OnModuleInit {
   }
 
   async processLinkPublic2(link: LinkEntity) {
-    console.log("🚀 ~ MonitoringService ~ processLinkPublic2 ~ link:", link)
     if (link.postIdV1) {
       const runThread = async (threadOrder: number) => {
         while (true) {
-          if (link.postIdV1 === '122157886814523203') console.time('a')
-
           const linkRuning = this.linksPublic.find(item => item.id === link.id)
           if (!linkRuning) { break };
           if (threadOrder > linkRuning.thread) { break };
           try {
             let dataComment = await this.facebookService.getCmtPublic(link.postIdV1, link) || {} as any
+            console.log("🚀 ~ MonitoringService ~ runThread ~ dataComment:", dataComment)
             if (!dataComment?.commentId || !dataComment?.userIdComment) continue
             this.addQueueComment(dataComment, link)
 
           } catch (error) {
             console.log(`Crawl comment with postId ${link.postId} Error.`, error?.message)
           } finally {
-            if (link.postIdV1 === '122157886814523203') console.timeEnd('a')
             if (link.delayTime) {
               await delay((linkRuning.delayTime) * 1000)
             }
