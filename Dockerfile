@@ -1,20 +1,19 @@
-# Base image
-FROM node:lts
-
-# Create app directory
+# Stage 1: build
+FROM node:22 AS builder
 WORKDIR /usr/src/app
 
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
 COPY package*.json ./
+RUN npm install
 
-# Install app dependencies
-RUN npm install --force
-
-# Bundle app source
 COPY . .
-
-# Creates a "dist" folder with the production build
 RUN npm run build
 
-# Start the server using the production build
-CMD [ "node", "dist/main.js" ]
+# Stage 2: run
+FROM node:22
+WORKDIR /usr/src/app
+
+COPY --from=builder /usr/src/app/package*.json ./
+COPY --from=builder /usr/src/app/node_modules ./node_modules
+COPY --from=builder /usr/src/app/dist ./dist
+
+CMD ["node", "dist/main.js"]
