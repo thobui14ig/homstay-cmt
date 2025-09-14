@@ -4,9 +4,9 @@ import { Injectable } from "@nestjs/common";
 import { AxiosResponse } from "axios";
 import { firstValueFrom } from "rxjs";
 import { getHttpAgent } from "src/common/utils/helper";
-import { LinkType } from "src/domain/entity/links.entity";
+import { LinkType } from "src/application/links/entities/links.entity";
 import { ProxyService } from "src/application/proxy/proxy.service";
-import { TokenStatus } from "src/domain/entity/token.entity";
+import { TokenStatus } from "src/application/token/entities/token.entity";
 import { TokenService } from "src/application/token/token.service";
 import { IFacebookResponse, IGetInfoLinkResponse } from "./get-info-link.i";
 
@@ -65,17 +65,6 @@ export class GetInfoLinkUseCase {
             }
         } catch (error) {
             console.log("🚀 ~ GetInfoLinkUseCase ~ getInfoLink ~ error:", error?.message)
-            if (i === 0 && retryCount === 0) {
-                i = i + 1
-
-                return this.getInfoLink(postId, i)
-            }
-
-            if (retryCount < 3) {
-                retryCount = retryCount + 1
-
-                return this.getInfoLink(postId, 1, retryCount)
-            }
             if (error.response?.data?.error?.code === 100 && (error?.response?.data?.error?.message as string)?.includes('Unsupported get request. Object with ID')) {
                 return {
                     linkType: LinkType.DIE
@@ -88,6 +77,18 @@ export class GetInfoLinkUseCase {
             if (error.response?.data?.error?.code === 190) {//check point
                 await this.tokenService.updateStatusToken(token, TokenStatus.DIE)
             }
+            // if (i === 0 && retryCount === 0) {
+            //     i = i + 1
+
+            //     return this.getInfoLink(postId, i)
+            // }
+
+            // if (retryCount < 3) {
+            //     retryCount = retryCount + 1
+
+            //     return this.getInfoLink(postId, 1, retryCount)
+            // }
+
 
             return {
                 linkType: LinkType.UNDEFINED

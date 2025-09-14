@@ -2,9 +2,9 @@ import { faker } from '@faker-js/faker';
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
-import { LinkEntity } from 'src/domain/entity/links.entity';
+import { LinkEntity } from 'src/application/links/entities/links.entity';
 import { ProxyService } from 'src/application/proxy/proxy.service';
-import { TokenStatus } from 'src/domain/entity/token.entity';
+import { TokenStatus } from 'src/application/token/entities/token.entity';
 import { TokenService } from 'src/application/token/token.service';
 import { getHttpAgent } from 'src/common/utils/helper';
 

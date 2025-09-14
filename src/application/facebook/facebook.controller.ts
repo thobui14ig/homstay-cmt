@@ -1,6 +1,6 @@
 import { Body, Controller, Post, Req } from "@nestjs/common";
 import { FacebookService } from "./facebook.service";
-import { CommentEntity } from "../../domain/entity/comment.entity";
+import { CommentEntity } from "../comments/entities/comment.entity";
 
 @Controller('facebook')
 export class FacebookController {

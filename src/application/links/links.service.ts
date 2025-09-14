@@ -3,10 +3,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as dayjs from 'dayjs';
 import * as timezone from 'dayjs/plugin/timezone';
 import * as utc from 'dayjs/plugin/utc';
-import { DataSource, In, IsNull, MoreThanOrEqual, Not, Repository } from 'typeorm';
-import { HideBy, LinkEntity, LinkStatus, LinkType } from '../../domain/entity/links.entity';
-import { LEVEL } from '../../domain/entity/user.entity';
+import { DataSource, In, IsNull, MoreThan, MoreThanOrEqual, Not, Repository } from 'typeorm';
+import { LEVEL } from '../user/entities/user.entity';
+import { UpdateLinkDTO } from './dto/update-link.dto';
+import { HideBy, LinkEntity, LinkStatus, LinkType } from './entities/links.entity';
 import { ISettingLinkDto } from './links.service.i';
+import { CookieStatus } from '../cookie/entities/cookie.entity';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -26,6 +28,20 @@ export class LinkService {
         id,
       },
     });
+  }
+
+  update(params: UpdateLinkDTO, level: LEVEL) {
+    const argUpdate: Partial<LinkEntity> = {};
+    argUpdate.id = params.id;
+    argUpdate.linkName = params.linkName;
+    argUpdate.hideCmt = params.hideCmt;
+
+    if (level === LEVEL.ADMIN) {
+      argUpdate.delayTime = params.delayTime;
+      argUpdate.type = params.type;
+    }
+
+    return this.repo.save(argUpdate);
   }
 
   async hideCmt(linkId: number, type: HideBy, userId: number) {
@@ -122,17 +138,19 @@ export class LinkService {
     })
   }
 
-  getPostStarted(): Promise<LinkEntity[]> {
+  getPostStarted(ids: number[]): Promise<LinkEntity[]> {
     return this.repo.find({
       where: {
         status: In([LinkStatus.Started, LinkStatus.Pending]),
         type: Not(LinkType.DIE),
         delayTime: MoreThanOrEqual(0),
         hideCmt: false,
+        id: In(ids),
+        isDelete: false
       },
       relations: {
         user: true
-      }
+      },
     })
   }
 
@@ -146,19 +164,18 @@ export class LinkService {
     })
   }
 
-  processTotalComment(linkIds: number[]) {
+  processTotalComment() {
     return this.conenction.query(`
       with k1 as(
 	      select l.id as linkId, count(c.id) as totalComment from links l 
         join comments c 
         on c.link_id = l.id
-       where l.id in(?)
         group by l.id  
       )
       update links l 
       join k1 on k1.linkId = l.id
       set 
       l.comment_count = k1.totalComment
-    `, [linkIds])
+    `, [])
   }
 }

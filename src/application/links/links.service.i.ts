@@ -1,5 +1,10 @@
+import { UserEntity } from "../user/entities/user.entity";
+import { CreateLinkDTO } from "./dto/create-link.dto";
+import { LinkType } from "./entities/links.entity";
 
-import { LinkType } from "../../domain/entity/links.entity";
+export interface CreateLinkParams extends CreateLinkDTO {
+    userId: number
+}
 
 export interface BodyLinkQuery {
     type: LinkType

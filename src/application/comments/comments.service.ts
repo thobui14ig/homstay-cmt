@@ -4,7 +4,7 @@ import * as dayjs from 'dayjs';
 import * as timezone from 'dayjs/plugin/timezone';
 import * as utc from 'dayjs/plugin/utc';
 import { Not, Repository } from 'typeorm';
-import { CommentEntity } from '../../domain/entity/comment.entity';
+import { CommentEntity } from './entities/comment.entity';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -40,6 +40,18 @@ export class CommentsService {
       where: {
         linkId,
         userId,
+        cmtId
+      },
+      select: {
+        id: true
+      }
+    })
+  }
+
+  getCommentByCmtId(linkId: number, cmtId: string) {
+    return this.repo.findOne({
+      where: {
+        linkId,
         cmtId
       },
       select: {

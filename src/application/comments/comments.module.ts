@@ -1,8 +1,8 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CommentEntity } from '../../domain/entity/comment.entity';
-import { CookieEntity } from '../../domain/entity/cookie.entity';
+import { CommentEntity } from './entities/comment.entity';
+import { CookieEntity } from '../cookie/entities/cookie.entity';
 import { FacebookModule } from '../facebook/facebook.module';
 
 @Module({

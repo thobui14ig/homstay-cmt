@@ -1,8 +1,8 @@
 import { HttpsProxyAgent } from "https-proxy-agent";
-import { ProxyEntity } from "src/domain/entity/proxy.entity";
+import { ProxyEntity } from "src/application/proxy/entities/proxy.entity";
 import * as dayjs from 'dayjs';
 import * as utc from 'dayjs/plugin/utc';
-import { LinkEntity } from "src/domain/entity/links.entity";
+import { LinkEntity } from "src/application/links/entities/links.entity";
 import { GroupedLinksByType } from "src/application/monitoring/monitoring.service.i";
 
 dayjs.extend(utc);

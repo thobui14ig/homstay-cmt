@@ -3,7 +3,7 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
 import { delay } from 'src/common/utils/helper';
 import { Repository } from 'typeorm';
-import { ProxyEntity, ProxyStatus } from '../../domain/entity/proxy.entity';
+import { ProxyEntity, ProxyStatus } from './entities/proxy.entity';
 
 @Injectable()
 export class ProxyService {

@@ -1,4 +1,4 @@
-import { LinkEntity, LinkStatus, LinkType } from "../../domain/entity/links.entity";
+import { LinkEntity, LinkStatus, LinkType } from "../links/entities/links.entity";
 
 export interface GroupedLinksByType {
     public: LinkEntity[];

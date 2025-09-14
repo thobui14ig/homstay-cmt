@@ -1,0 +1,23 @@
+version: '3'
+services:
+  fb-sync-cmt:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fb-sync-cmt
+    restart: always
+    environment:
+      - PORT=1000
+      - DB_TYPE=mysql
+      - DB_HOST=46.62.205.241
+      - DB_PORT=3306
+      - DB_USER_NAME=root
+      - DB_PASSWORD=MyRootPass123!
+      - DB_DATABASE=crawl-fb
+      - NODE_OPTIONS=--max-old-space-size=4096
+      # redis
+      - REDIS_HOST=46.62.205.241
+      - REDIS_PORT=6379
+      - REDIS_TYPE=single
+    ports:
+      - '1000:1000'

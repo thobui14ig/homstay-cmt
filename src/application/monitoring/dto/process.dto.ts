@@ -1,5 +1,5 @@
 import { IsEnum, IsNumber } from 'class-validator';
-import { LinkStatus } from 'src/domain/entity/links.entity';
+import { LinkStatus } from 'src/application/links/entities/links.entity';
 
 export class ProcessDTO {
   @IsNumber()

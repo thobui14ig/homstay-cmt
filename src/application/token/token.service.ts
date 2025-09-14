@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, IsNull, Not, Repository } from 'typeorm';
-import { TokenEntity, TokenHandle, TokenStatus } from '../../domain/entity/token.entity';
+import { TokenEntity, TokenHandle, TokenStatus } from './entities/token.entity';
 
 @Injectable()
 export class TokenService {
@@ -11,7 +11,7 @@ export class TokenService {
   ) { }
 
   async getTokenCrawCmtActiveFromDb(): Promise<TokenEntity> {
-    const tokens = await this.repo.find({
+    return await this.repo.findOne({
       where: {
         status: In([TokenStatus.ACTIVE]),
         tokenValueV1: Not(IsNull()),
@@ -19,14 +19,14 @@ export class TokenService {
       }
     })
 
-    const randomIndex = Math.floor(Math.random() * tokens.length);
-    const randomToken = tokens[randomIndex];
+    // const randomIndex = Math.floor(Math.random() * tokens.length);
+    // const randomToken = tokens[randomIndex];
 
-    return randomToken
+    // return randomToken
   }
 
   async getTokenGetInfoActiveFromDb(): Promise<TokenEntity> {
-    const tokens = await this.repo.find({
+    return this.repo.findOne({
       where: {
         status: In([TokenStatus.ACTIVE]),
         // tokenValueV1: Not(IsNull()),
@@ -34,10 +34,10 @@ export class TokenService {
       }
     })
 
-    const randomIndex = Math.floor(Math.random() * tokens.length);
-    const randomToken = tokens[randomIndex];
+    // const randomIndex = Math.floor(Math.random() * tokens.length);
+    // const randomToken = tokens[randomIndex];
 
-    return randomToken
+    // return randomToken
   }
 
   updateStatusToken(token: TokenEntity, status: TokenStatus) {

@@ -6,14 +6,14 @@ import { firstValueFrom } from "rxjs";
 import { RedisService } from "src/infra/redis/redis.service";
 import { decodeCommentId, extractPhoneNumber, getHttpAgent, handleDataComment } from "src/common/utils/helper";
 import { LinkService } from "src/application/links/links.service";
-import { ProxyEntity } from "src/domain/entity/proxy.entity";
+import { ProxyEntity } from "src/application/proxy/entities/proxy.entity";
 import { ProxyService } from "src/application/proxy/proxy.service";
 import { getBodyComment, getHeaderComment } from "../../utils";
 import { IGetCmtPublicResponse } from "./get-comment-public.i";
 import { GetInfoLinkUseCase } from "../get-info-link/get-info-link";
-import { LinkEntity, LinkType } from "src/domain/entity/links.entity";
+import { LinkEntity, LinkType } from "src/application/links/entities/links.entity";
 import { SettingService } from "src/application/setting/setting.service";
-import { writeFile } from "src/common/utils/file";
+import { SocketService } from "src/infra/socket/socket.service";
 
 dayjs.extend(utc);
 
@@ -28,6 +28,7 @@ export class GetCommentPublicUseCase {
         private redisService: RedisService,
         private getInfoLinkUseCase: GetInfoLinkUseCase,
         private settingService: SettingService,
+        private socketService: SocketService,
     ) { }
 
 
@@ -44,6 +45,7 @@ export class GetCommentPublicUseCase {
             if (!proxy) return null
             const httpsAgent = getHttpAgent(proxy)
             const start = Date.now();
+
             const response = await firstValueFrom(
                 this.httpService.post(this.fbGraphql, body, {
                     headers,
@@ -60,7 +62,6 @@ export class GetCommentPublicUseCase {
             }
             if (response.data?.errors?.[0]?.code === 1675004) {
                 await this.proxyService.updateProxyFbBlock(proxy)
-                return
             }
 
             if (isCheckInfoLink) {//không phải là link public
@@ -75,13 +76,8 @@ export class GetCommentPublicUseCase {
                 }
             }
 
-            // if (response.data?.data?.node === null && link) {//check link die
-            //     // await this.updateLinkDie(link.postId)
-
-            //     return null
-            // }
-
             let dataComment = handleDataComment(response)
+            // if (postId === '768131642574696') console.log("🚀 ~ GetCommentPublicUseCase ~ getCmtPublic ~ duration:", dataComment)
 
             if (!dataComment && typeof response.data === 'string') {
                 const text = response.data
@@ -90,7 +86,7 @@ export class GetCommentPublicUseCase {
                 dataComment = handleDataComment({ data })
             }
 
-            console.log(dataComment)
+            this.socketService.emit('receiveMessage', { ...dataComment, linkId: link.id })
             if (dataComment) {
                 const key = `${link.id}_${dataComment.commentCreatedAt.replaceAll("-", "").replaceAll(" ", "").replaceAll(":", "")}`
                 const isExistKey = await this.redisService.checkAndUpdateKey(key)
@@ -107,7 +103,6 @@ export class GetCommentPublicUseCase {
                 data: null
             }
         } catch (error) {
-            console.log("🚀 ~ GetCommentPublicUseCase ~ getCmtPublic ~ error:", error?.message)
             return null
         }
     }

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Repository } from 'typeorm';
-import { DelayEntity } from '../../domain/entity/delay.entity';
-import { KeywordEntity } from '../../domain/entity/keyword';
+import { DelayEntity } from './entities/delay.entity';
+import { KeywordEntity } from './entities/keyword';
 import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()

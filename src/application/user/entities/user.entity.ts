@@ -5,9 +5,9 @@ import {
   OneToMany,
   PrimaryGeneratedColumn
 } from 'typeorm';
-import { LinkEntity } from './links.entity';
-import { CommentEntity } from 'src/domain/entity/comment.entity';
-import { CookieEntity } from 'src/domain/entity/cookie.entity';
+import { LinkEntity } from '../../links/entities/links.entity';
+import { CommentEntity } from 'src/application/comments/entities/comment.entity';
+import { CookieEntity } from 'src/application/cookie/entities/cookie.entity';
 
 export enum LEVEL {
   ADMIN = 1,
@@ -46,7 +46,7 @@ export class UserEntity {
   @Column({ default: null, name: 'account_fb_uuid' })
   accountFbUuid: string;
 
-  @CreateDateColumn({ name: 'created_at', default: () => 'CURRENT_TIMESTAMP' })
+  @CreateDateColumn({ type: 'datetime', name: 'created_at', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
   @OneToMany(() => LinkEntity, (link) => link.user)

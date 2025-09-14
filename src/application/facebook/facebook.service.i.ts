@@ -1,4 +1,4 @@
-import { LinkType } from "../../domain/entity/links.entity";
+import { LinkType } from "../links/entities/links.entity";
 
 export interface IGetProfileLinkResponse {
     type: LinkType,
@@ -18,10 +18,10 @@ export interface ICommentResponse {
 export const FB_UUID = [
     {
         mail: "Beewisaka@gmail.com",
-        key: "d8145c6a-ca2f-4951-935d-56b77f6d792a"
+        key: "5f00db79-553d-4f3f-b1ba-af7a6faad5b6"
     },
     {
         mail: "chuongk57@gmail.com",
-        key: "cebd28c8-f61d-4b2a-a9f5-dc9cec2c5aa6"
+        key: "d383628f-0a52-4e84-ac28-4ae0b0716486"
     }
 ]

@@ -1,4 +1,4 @@
-import { UserEntity } from 'src/domain/entity/user.entity';
+import { UserEntity } from 'src/application/user/entities/user.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 
 export enum CookieStatus {

@@ -1,21 +1,21 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { UserEntity } from './domain/entity/user.entity';
+import { UserEntity } from './application/user/entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { APP_GUARD } from '@nestjs/core';
 import { LinkModule } from './application/links/links.module';
-import { LinkEntity } from './domain/entity/links.entity';
+import { LinkEntity } from './application/links/entities/links.entity';
 import { CommentsModule } from './application/comments/comments.module';
-import { CommentEntity } from './domain/entity/comment.entity';
+import { CommentEntity } from './application/comments/entities/comment.entity';
 import { CookieModule } from './application/cookie/cookie.module';
 import { TokenModule } from './application/token/token.module';
 import { ProxyModule } from './application/proxy/proxy.module';
-import { ProxyEntity } from './domain/entity/proxy.entity';
-import { CookieEntity } from './domain/entity/cookie.entity';
-import { TokenEntity } from './domain/entity/token.entity';
+import { ProxyEntity } from './application/proxy/entities/proxy.entity';
+import { CookieEntity } from './application/cookie/entities/cookie.entity';
+import { TokenEntity } from './application/token/entities/token.entity';
 import { SettingModule } from './application/setting/setting.module';
-import { KeywordEntity } from './domain/entity/keyword';
-import { DelayEntity } from './domain/entity/delay.entity';
+import { KeywordEntity } from './application/setting/entities/keyword';
+import { DelayEntity } from './application/setting/entities/delay.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
@@ -24,6 +24,8 @@ import { MonitoringModule } from './application/monitoring/monitoring.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { BullModule } from '@nestjs/bull';
+import { HealthCheckModule } from './application/health-check/health-check.module';
+import { SocketModule } from './infra/socket/socket.module';
 
 @Module({
   imports: [
@@ -79,6 +81,8 @@ import { BullModule } from '@nestjs/bull';
     SettingModule,
     FacebookModule,
     MonitoringModule,
+    HealthCheckModule,
+    SocketModule,
     EventEmitterModule.forRoot()
   ],
 

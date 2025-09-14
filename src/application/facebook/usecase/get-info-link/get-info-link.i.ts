@@ -1,4 +1,4 @@
-import { LinkType } from "src/domain/entity/links.entity";
+import { LinkType } from "src/application/links/entities/links.entity";
 
 export interface IFacebookResponse {
     comments: {

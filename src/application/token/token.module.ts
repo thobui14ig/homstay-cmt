@@ -1,7 +1,7 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FacebookModule } from '../facebook/facebook.module';
-import { TokenEntity } from '../../domain/entity/token.entity';
+import { TokenEntity } from './entities/token.entity';
 import { TokenService } from './token.service';
 
 @Module({

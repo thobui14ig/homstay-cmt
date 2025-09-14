@@ -7,9 +7,9 @@ import {
   JoinColumn,
   OneToMany,
 } from 'typeorm';
-import { UserEntity } from './user.entity';
-import { CommentEntity } from 'src/domain/entity/comment.entity';
-import { KeywordEntity } from 'src/domain/entity/keyword';
+import { UserEntity } from '../../user/entities/user.entity';
+import { CommentEntity } from 'src/application/comments/entities/comment.entity';
+import { KeywordEntity } from 'src/application/setting/entities/keyword';
 
 export enum LinkStatus {
   Pending = 'pending',
@@ -55,10 +55,10 @@ export class LinkEntity {
   @Column({ length: 255, nullable: true, name: 'page_id' })
   pageId: string | null;
 
-  @Column({ nullable: true, name: 'last_comment_time' })
+  @Column({ type: 'datetime', nullable: true, name: 'last_comment_time' })
   lastCommentTime: Date | null;
 
-  @Column({ nullable: true, name: 'time_craw_update' })
+  @Column({ type: 'datetime', nullable: true, name: 'time_craw_update' })
   timeCrawUpdate: Date | null;
 
   @Column({ type: 'int', default: 0, name: 'comment_count' })
@@ -106,10 +106,14 @@ export class LinkEntity {
   @Column({ name: 'post_id_v1_die', type: 'boolean' })
   postIdV1Die: boolean;
 
+  @Column({ default: false, name: 'is_deleted' })
+  isDelete: Boolean;
+
   @Column({ name: 'thread' })
   thread: number;
 
   @CreateDateColumn({
+    type: 'datetime',
     name: 'created_at',
     default: () => 'CURRENT_TIMESTAMP',
   })

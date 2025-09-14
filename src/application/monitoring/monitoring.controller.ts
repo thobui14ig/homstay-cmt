@@ -10,4 +10,9 @@ export class MonitoringController {
     // console.log("🚀 ~ MonitoringController ~ updateProcess ~ processDTO:", processDTO)
     // return this.monitoringService.handleInsertComment(processDTO)
   }
+
+  @Post()
+  receiveLinkIds(@Body() body: any) {
+    this.monitoringService.linkIdsReceive = body.linkIds
+  }
 }

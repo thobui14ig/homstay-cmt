@@ -3,11 +3,11 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { firstValueFrom } from "rxjs";
 import { changeCookiesFb, formatCookies, getHttpAgent } from "src/common/utils/helper";
-import { CommentEntity } from "src/domain/entity/comment.entity";
-import { CookieEntity, CookieStatus } from "src/domain/entity/cookie.entity";
-import { HideBy } from "src/domain/entity/links.entity";
+import { CommentEntity } from "src/application/comments/entities/comment.entity";
+import { CookieEntity, CookieStatus } from "src/application/cookie/entities/cookie.entity";
+import { HideBy } from "src/application/links/entities/links.entity";
 import { ProxyService } from "src/application/proxy/proxy.service";
-import { KeywordEntity } from "src/domain/entity/keyword";
+import { KeywordEntity } from "src/application/setting/entities/keyword";
 import { TokenService } from "src/application/token/token.service";
 import { Repository } from "typeorm";
 

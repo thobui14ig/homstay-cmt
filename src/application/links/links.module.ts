@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { LinkService } from './links.service';
-import { LinkEntity } from '../../domain/entity/links.entity';
+import { LinkEntity } from './entities/links.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { DelayEntity } from '../../domain/entity/delay.entity';
-import { CookieEntity } from '../../domain/entity/cookie.entity';
+import { DelayEntity } from '../setting/entities/delay.entity';
+import { CookieEntity } from '../cookie/entities/cookie.entity';
 import { FacebookModule } from '../facebook/facebook.module';
-import { CommentEntity } from '../../domain/entity/comment.entity';
-import { KeywordEntity } from '../../domain/entity/keyword';
+import { CommentEntity } from '../comments/entities/comment.entity';
+import { KeywordEntity } from '../setting/entities/keyword';
 
 @Module({
   imports: [TypeOrmModule.forFeature([LinkEntity, DelayEntity, CookieEntity, CommentEntity, KeywordEntity]), FacebookModule],

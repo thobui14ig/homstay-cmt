@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
-import { ProxyEntity } from 'src/domain/entity/proxy.entity';
+import { ProxyEntity } from 'src/application/proxy/entities/proxy.entity';
 import { TokenService } from 'src/application/token/token.service';
 import { getHttpAgent } from 'src/common/utils/helper';
 import { ICheckLinkStatus } from './check-link-status-usecase.i';

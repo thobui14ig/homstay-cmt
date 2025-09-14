@@ -1,5 +1,5 @@
-import { LinkEntity } from 'src/domain/entity/links.entity';
-import { UserEntity } from 'src/domain/entity/user.entity';
+import { LinkEntity } from 'src/application/links/entities/links.entity';
+import { UserEntity } from 'src/application/user/entities/user.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 
 @Entity('comments')
@@ -22,7 +22,7 @@ export class CommentEntity {
     @Column({ name: 'message', type: 'text', nullable: true })
     message: string;
 
-    @Column({ name: 'time_created', nullable: true })
+    @Column({ name: 'time_created', type: 'datetime', nullable: true })
     timeCreated: Date;
 
     @Column({ name: 'phone_number', type: 'varchar', length: 255, nullable: true })

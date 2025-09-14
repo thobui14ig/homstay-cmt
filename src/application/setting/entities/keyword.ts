@@ -1,4 +1,4 @@
-import { LinkEntity } from 'src/domain/entity/links.entity';
+import { LinkEntity } from 'src/application/links/entities/links.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 
 export interface IKeyword {
