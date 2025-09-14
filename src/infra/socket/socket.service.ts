@@ -6,7 +6,7 @@ export class SocketService {
     socket1: any = null;
 
     constructor() {
-        this.socket1 = this.createSocket("46.62.205.241")
+        this.socket1 = this.createSocket("103.67.196.23")
     }
 
     emit(key: string, payload: any) {
