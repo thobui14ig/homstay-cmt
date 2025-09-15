@@ -12,6 +12,8 @@ import { FB_UUID } from './facebook.service.i';
 import { CheckProxyBlockUseCase } from './usecase/check-proxy-block/check-proxy-block-usecase';
 import { GetCommentPrivateUseCase } from './usecase/get-comment-private/get-comment-private';
 import { GetCommentPublicUseCase } from './usecase/get-comment-public/get-comment-public';
+import { getHttpAgent } from 'src/common/utils/helper';
+import { ProxyService } from '../proxy/proxy.service';
 
 dayjs.extend(utc);
 // dayjs.extend(timezone);
@@ -30,6 +32,7 @@ export class FacebookService {
     private getCommentPrivateUseCase: GetCommentPrivateUseCase,
     private CheckProxyBlockUseCase: CheckProxyBlockUseCase,
     private commentsService: CommentsService,
+    private proxyService: ProxyService,
     private connection: DataSource
   ) {
   }
@@ -66,6 +69,8 @@ export class FacebookService {
       key: account.key,
       uids: [String(uid)]
     }
+    const proxy = await this.proxyService.getRandomProxy()
+    const httpsAgent = getHttpAgent(proxy)
     const response = await firstValueFrom(
       this.httpService.post("https://api.fbuid.com/keys/convert", body,),
     );

@@ -114,7 +114,6 @@ export class MonitoringConsumer {
     }
 
     async handlePhoneNumber(phoneNumber: string, uid: string, commentId: string, accountFbUuid: string) {
-        console.log("🚀 ~ MonitoringConsumer ~ handlePhoneNumber ~ handlePhoneNumber:", commentId)
         let newPhoneNumber = phoneNumber
         if (newPhoneNumber) {
             try {
@@ -128,42 +127,6 @@ export class MonitoringConsumer {
 
         return newPhoneNumber
     }
-
-    // @Cron(CronExpression.EVERY_5_MINUTES)
-    // async processGetPhoneNumberVip() {
-    //     if (this.listCmtWaitProcess.length < 20) return
-    //     const listCmtWaitProcessClone = [...this.listCmtWaitProcess]
-    //     this.listCmtWaitProcess = []
-
-    //     const batchSize = 20;
-    //     for (let i = 0; i < listCmtWaitProcessClone.length; i += batchSize) {
-    //         const batch = listCmtWaitProcessClone.slice(i, i + batchSize);
-    //         const account = FB_UUID.find(item => item.mail === "chuongk57@gmail.com")
-    //         if (!account) continue;
-    //         const uids = batch.map((item) => {
-    //             return String(item.userUid)
-    //         })
-    //         const body = {
-    //             key: account.key,
-    //             uids: [...uids]
-    //         }
-    //         const response = await firstValueFrom(
-    //             this.httpService.post("https://api.fbuid.com/keys/convert", body,),
-    //         );
-    //         if (response.data.length <= 0) continue
-    //         for (const element of batch) {
-    //             const phone = response?.data?.find(item => item.uid == element.userUid)
-
-    //             if (!phone) continue
-    //             const cmt = await this.commentService.getCommentByCmtId(element.linkId, element.commentId)
-    //             if (!cmt) continue;
-    //             await this.commentRepository.save({
-    //                 id: cmt.id,
-    //                 phoneNumber: phone.phone
-    //             })
-    //         }
-    //     }
-    // }
 
     insertCmtWaitProcessPhone(user_uid: string, comment_id: string, link_id: number) {
         try {
