@@ -69,7 +69,7 @@ export class GetCommentPrivateUseCase {
             }
         }
 
-        this.socketService.emit('receiveMessage', { ...dataComment.data, linkId: linkId })
+        dataComment && this.socketService.emit('receiveMessage', { ...dataComment.data, linkId: linkId })
         if (dataComment?.data?.commentId) {
             const key = `${postId}_${dataComment?.data?.commentCreatedAt.replaceAll("-", "").replaceAll(" ", "").replaceAll(":", "")}`
             const isExistKey = await this.redisService.checkAndUpdateKey(key)
