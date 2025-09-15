@@ -94,7 +94,7 @@ export class MonitoringService {
             this.addQueueComment(dataComment, link)
 
           } catch (error) {
-            console.log(`Crawl comment with postId ${link.postId} Error.`, error?.message)
+            console.log(`Crawl comment with postId ${link.postId} Error.`, error)
           } finally {
             if (link.delayTime) {
               await delay((linkRuning.delayTime) * 1000)
@@ -124,7 +124,7 @@ export class MonitoringService {
             this.addQueueComment(dataComment, link)
 
           } catch (error) {
-            console.log(`Crawl comment with postId ${link.postId} Error.`, error?.message)
+            console.log(`Crawl comment with postId ${link.postId} Error.`, error)
           } finally {
             const end = Date.now();
             const duration = (end - start) / 1000;
@@ -166,7 +166,7 @@ export class MonitoringService {
           if (!dataComment?.commentId || !dataComment?.userIdComment) continue
           this.addQueueComment(dataComment, link)
         } catch (error) {
-          console.log(`Crawl comment with postId ${link.postId} Error.`, error?.message)
+          console.log(`Crawl comment with postId ${link.postId} Error.`, error)
         } finally {
           if (link.delayTime) {
             await delay((linkRuning.delayTime) * 1000)
